@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import { NavBar } from 'antd-mobile'
-import { List, InputItem, WhiteSpace, WingBlank, Radio, Button } from 'antd-mobile'
+import { List, InputItem, WhiteSpace, WingBlank, Radio, Button, Toast } from 'antd-mobile'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import Logo from '../components/Logo/Logo'
+import { register } from '../redux/actions'
 
 const Item = List.Item
 
-export default class Register extends Component {
+class Register extends Component {
+  static propTypes = {
+    register: PropTypes.func.isRequired,
+  }
   state = {
     username: '',
     password: '',
@@ -19,7 +25,14 @@ export default class Register extends Component {
     })
   }
   register = () => {
-    console.log(this.state)
+    this.props.register(this.state, (result) => {
+      if (result.code === 1) {
+        Toast.fail(result.msg)
+      } else {
+        // Toast.success('成功')
+        this.props.history.push(`/${result.data.type}info`)
+      }
+    })
   }
   goLogin = () => {
     this.props.history.replace('/login')
@@ -51,7 +64,7 @@ export default class Register extends Component {
                 大神
               </Radio>
               &nbsp;&nbsp;
-              <Radio checked={type === 'laoban'} onChange={() => this.handleChange('type', 'laoban')}>
+              <Radio checked={type === 'boss'} onChange={() => this.handleChange('type', 'boss')}>
                 老板
               </Radio>
             </Item>
@@ -67,3 +80,4 @@ export default class Register extends Component {
     )
   }
 }
+export default connect((state) => ({}), { register })(Register)

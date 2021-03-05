@@ -1,22 +1,36 @@
 import React, { Component } from 'react'
 import { NavBar } from 'antd-mobile'
-import { List, InputItem, WhiteSpace, WingBlank, Button } from 'antd-mobile'
+import { List, InputItem, WhiteSpace, WingBlank, Button, Toast } from 'antd-mobile'
+import { connect } from 'react-redux'
+import { login } from '../redux/actions'
 
 import Logo from '../components/Logo/Logo'
 
-export default class Register extends Component {
+class Login extends Component {
   state = {
     username: '',
     password: '',
   }
-  componentWillReceiveProps() {}
+  UNSAFE_componentWillReceiveProps() {}
   handleChange = (key, val) => {
     this.setState({
       [key]: val,
     })
   }
   login = () => {
-    console.log(this.state)
+    this.props.login(this.state, result => {
+      if (result.code === 1) {
+        Toast.fail(result.msg)
+      } else {
+        // Toast.success('成功')
+        const { type, avatar } = result.data
+        if (avatar) {
+          this.props.history.push(`/${type}`)
+        } else {
+          this.props.history.push(`/${type}info`)
+        }
+      }
+    })
   }
   goRegister = () => {
     this.props.history.replace('/register')
@@ -29,11 +43,11 @@ export default class Register extends Component {
         <WingBlank>
           <List>
             <WhiteSpace />
-            <InputItem placeholder="请输入用户名" onChange={(val) => this.handleChange('username', val)}>
+            <InputItem placeholder="请输入用户名" onChange={val => this.handleChange('username', val)}>
               用&nbsp;户&nbsp;名：
             </InputItem>
             <WhiteSpace />
-            <InputItem type="password" placeholder="请输入密码" onChange={(val) => this.handleChange('password', val)}>
+            <InputItem type="password" placeholder="请输入密码" onChange={val => this.handleChange('password', val)}>
               密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：
             </InputItem>
             <WhiteSpace />
@@ -48,3 +62,4 @@ export default class Register extends Component {
     )
   }
 }
+export default connect(state => ({ user: state.user }), { login })(Login)

@@ -7,6 +7,10 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd-mobile": "^2.3.4",
+    "axios": "^0.21.1",
+    "js-cookie": "^2.2.1",
+    "prop-types": "^15.7.2",
+    "rc-queue-anim": "^1.8.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -14,6 +18,7 @@
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "socket.io-client": "^3.1.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -54,5 +59,6 @@
     "brand-primary": "red",
     "brand-primary-tap": "#f40",
     "color-text-base": "#333"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
