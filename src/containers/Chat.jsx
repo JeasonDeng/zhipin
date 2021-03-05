@@ -11,7 +11,6 @@ class Chat extends Component {
     showEmoji: false,
   }
   componentDidMount() {
-    console.log('1', document.body.scrollHeight)
     window.scrollTo(0, document.body.scrollHeight)
 
     this.emojis = [
@@ -74,7 +73,6 @@ class Chat extends Component {
     this.emojis = this.emojis.map((emoji) => ({ text: emoji }))
   }
   componentDidUpdate() {
-    console.log('3', document.body.scrollHeight)
     window.scrollTo(0, document.body.scrollHeight)
   }
   componentWillUnmount() {
@@ -106,7 +104,6 @@ class Chat extends Component {
     const targetId = this.props.match.params.userid
     const myAvatar = this.props.user.avatar
     if (!users[targetId]) {
-      console.log('0')
       return null
     }
     const chatId = [userid, targetId].sort().join('_')
